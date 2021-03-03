@@ -12,7 +12,6 @@ data['Hour'] = data['data'].dt.hour
 sorted_data_tick = data[data.Hour > 8]
 sorted_data_tick = sorted_data_tick[sorted_data_tick.Hour < 11]
 
-plt.title('awdawd')
 plt.ylabel("Kaina")
 ax = plt.gca()
 for column in ['Open','High','Low','Close']:
