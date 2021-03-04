@@ -7,9 +7,9 @@ csv_data['Gmt time'] = pd.to_datetime(csv_data['Gmt time'], format="%d.%m.%Y %H:
 csv_data = csv_data.set_index('Gmt time')
 
 plt.plot(csv_data.head(100))
-plt.grid()
 plt.legend(['Open', 'Low', 'High', 'Close'])
 plt.xlabel('Laikas')
 plt.ylabel('Kaina')
+plt.grid()
 plt.show()
 # plt.close()

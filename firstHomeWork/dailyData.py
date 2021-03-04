@@ -6,7 +6,7 @@ csv_data['Gmt time'] = pd.to_datetime(csv_data['Gmt time'], format="%d.%m.%Y %H:
 csv_data = csv_data.set_index('Gmt time')
 df = csv_data.drop(['Low', 'High'], 1)
 
-plt.plot(df.head(100))
+plt.plot(df.head(1000))
 plt.xticks(rotation=90)
 plt.legend(['Close', 'Open'])
 plt.xlabel('Laikas')
