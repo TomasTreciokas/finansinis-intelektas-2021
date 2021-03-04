@@ -13,8 +13,6 @@ csv_data = csv_data.set_index('Indeksas')
 
 plt.plot(csv_data.head(100))
 plt.legend(['Ask', 'Bid'])
-plt.xlabel('Kiekis')
-plt.ylabel('Kaina')
 plt.grid()
 plt.show()
 # plt.close()
