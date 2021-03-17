@@ -30,7 +30,7 @@ def average_true_range(data, period):
     data['ATR'] = 0
     data = true_range(get_tr_calculation_parameters(data))
 
-    data.iloc[period+1, data.columns.get_loc('ATR')] = data['TR'].head(period).mean()
+    data.iloc[period-1, data.columns.get_loc('ATR')] = data['TR'].head(period).mean()
     for i in range(period, len(data.index)):
         current_tr = data.iloc[i, data.columns.get_loc('TR')]
         pr_atr = data.iloc[i - 1, data.columns.get_loc('ATR')]
@@ -40,16 +40,18 @@ def average_true_range(data, period):
 
 
 def exponential_moving_average(data, period):
-    data_copy = data.to_frame()
-    data_copy['EMA'] = 0
-    data_copy.iloc[period - 1, data_copy.columns.get_loc('EMA')] = data.iloc[0: period].sum() / period
-    multiplier = (2 / (period + 1))
-    for i in range(period, len(data_copy.index)):
-        previous_ema = data_copy.iloc[i - 1, data_copy.columns.get_loc('EMA')]
-        data_value = data_copy.iloc[i].drop('EMA').values[0]
-        data_copy.iloc[i, data_copy.columns.get_loc('EMA')] = (data_value - previous_ema) * multiplier + previous_ema
+    data_frame = data.to_frame()
+    data_frame['EMA'] = 0
 
-    return data_copy['EMA']
+    data_frame.iloc[period - 1, data_frame.columns.get_loc('EMA')] = data.head(period).mean()
+    multiplier = (2 / (period + 1))
+    print(data_frame.head(2))
+    for i in range(period, len(data_frame.index)):
+        previous_ema = data_frame.iloc[i - 1, data_frame.columns.get_loc('EMA')]
+        current_price = data_frame.iloc[i, data_frame.columns.get_loc('Close')]
+        data_frame.iloc[i, data_frame.columns.get_loc('EMA')] = (current_price - previous_ema) * multiplier + previous_ema
+
+    return data_frame['EMA']
 
 
 def keltner_channel(file_name='../resource/HistoricalData_apple.csv',
@@ -66,7 +68,6 @@ def keltner_channel(file_name='../resource/HistoricalData_apple.csv',
     data['ATR'] = average_true_range(data, period)
     data['Upper'] = data['Middle/EMA'] + (data['ATR'])
     data['Lower'] = data['Middle/EMA'] - (data['ATR'])
-    print(data[['Middle/EMA']].loc[start_date:end_date])
 
     plot_data = data[['Middle/EMA', 'Upper', 'Lower', 'Close']].loc[start_date:end_date]
     plt.plot(plot_data)
