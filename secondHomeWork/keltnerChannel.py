@@ -6,7 +6,7 @@ def get_tr_calculation_parameters(data):
     data['H-L'] = data['High'] - data['Low']
     data['H-C.1'] = 0
     data['C.1-L'] = 0
-    for i in range(1, len(data.index)):
+    for i in range(len(data.index)):
         previous_close = data.iloc[i - 1, data.columns.get_loc('Close')]
         today_high = data.iloc[i, data.columns.get_loc('High')]
         today_low = data.iloc[i, data.columns.get_loc('Low')]
@@ -45,7 +45,6 @@ def exponential_moving_average(data, period):
 
     data_frame.iloc[period - 1, data_frame.columns.get_loc('EMA')] = data.head(period).mean()
     multiplier = (2 / (period + 1))
-    print(data_frame.head(2))
     for i in range(period, len(data_frame.index)):
         previous_ema = data_frame.iloc[i - 1, data_frame.columns.get_loc('EMA')]
         current_price = data_frame.iloc[i, data_frame.columns.get_loc('Close')]
