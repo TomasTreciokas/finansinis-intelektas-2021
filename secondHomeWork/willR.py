@@ -15,7 +15,7 @@ def williams_r(file_name='../resource/HistoricalData_apple.csv',
                end_date='03/12/2021',
                figure_title='Will %R',
                period=14):
-    date_format = "%Y.%m.%d %H:%M:%S"
+    date_format = "%Y.%m.%d"
     data = pd.read_csv(file_name)
     data['Time'] = pd.to_datetime(data['Time'], format=date_format)
     data = data.set_index('Time')
