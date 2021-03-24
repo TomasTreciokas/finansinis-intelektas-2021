@@ -5,7 +5,7 @@ import pandas as pd
 def calculate_williams_r(data, period):
     data['Highest'] = data['High'].rolling(period).max()
     data['Lowest'] = data['Low'].rolling(period).min()
-    filtering_condition = (data['Highest'] != 0) & (data['Lowest'] != 0) & ((data['Highest'] - data['Lowest']) != 0)
+    filtering_condition = (data['Highest'] != 0) & (data['Lowest'] != 0)
     data.loc[filtering_condition, '%R'] = (data['Highest'] - data['Close']) / (data['Highest'] - data['Lowest']) * -100
     return data
 
