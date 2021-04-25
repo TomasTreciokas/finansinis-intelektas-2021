@@ -35,6 +35,3 @@ def williams_r(file_name='../resource/HistoricalData_apple.csv',
     plt.xticks(rotation=45)
     fig.subplots_adjust(hspace=0.0)
     fig.show()
-
-
-williams_r()
